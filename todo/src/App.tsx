@@ -1,33 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState } from 'react';
 import './App.css'
 
+function InputBar(props) {
+  return (
+    <div>
+      <input type="text" placeholder="Nom de votre prochaine to do." />
+      <button onClick={() =>props.handleaddtodo('todo')}>
+        add
+      </button>
+    </div>
+  )
+}
+
 function App() {
-  const [count, setCount] = useState(0)
+  const [todos, setTodos] = useState([
+    {value: "exemple 1", status: "active"},
+    { value: "exemple 2", status: "completed" },
+  ]);
+  
+  function handleaddtodo(value: string) {
+    setTodos((todos) => [...todos, { value, status: "active" }]);
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="App">
+        <h1>To Do</h1>
+        <InputBar handleaddtodo={handleaddtodo}  />
+        {todos.map((todo, i) => (
+        <li key={i}>{todo.value}</li>
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
